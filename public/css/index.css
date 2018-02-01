@@ -1,0 +1,56 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body{
+  /*font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;*/
+  background: #605291;
+  background: -webkit-linear-gradient(top, #605291, #183A42);
+  background: -o-linear-gradient(bottom, #605291, #183A42);
+  background: -moz-linear-gradient(bottom, #605291, #183A42);
+  background: linear-gradient(to bottom, #605291, #183A42);
+}
+.wrapper{
+  margin-top: 10%;
+  border-radius: 20px;
+  border-width: thin;
+  border-style: solid;
+  border-color: white;
+}
+.header{
+  color: #ffffff;
+  font-family: 'Pacifico', cursive;
+}
+.header, .body{
+  margin-top: 5%;
+}
+.header h1{
+  font-size: 300%;
+  text-shadow: 5px 4px 3px #000;
+}
+.input-group span, input[type="text"], input[type="password"], input[type="email"]{
+  background-color: #ffffff;
+  color: #000;
+  border-style: none;
+  font-weight: bold;
+}
+input[type="submit"], #signinbtn, #signupbtn{
+  background-color: #ffffff;
+  font-weight: bold;
+  color: #000;
+}
+input[type="text"],input[type="password"]{
+  height: 40px;
+}
+.checkbox label{
+  color: #ffffff;
+}
+i{
+  color: #000;
+}
+.btns:hover{
+  transform: scale(1.1);
+  color:#fff;
+  background-color: #000;
+}

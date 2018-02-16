@@ -15,7 +15,7 @@ body{
   margin-top: 10%;
   border-radius: 20px;
   border-width: thin;
-  border-style: solid;
+  /* border-style: solid; */
   border-color: white;
 }
 .header{

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/font-family/lato.css">
+  <title>Home</title>
+</head>
+<body>
+  <!-- <p>Welcome to the home page</p>
+  <p>{{user}}</p>-->
+  <a href="/logout" id='logout'>Logout</a>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-4 chat-menu">
+        <div class="row">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="#">Project name</a> -->
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="list-inline actions">
+              <li class="col-xs-3 list-group-item text-center">Messages</li>
+              <li class="col-xs-3 list-group-item text-center">Contacts</li>
+              <li class="col-xs-3 list-group-item text-center">Requests</li>
+              <li class="col-xs-3 list-group-item text-center">Settings</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="search">
+            <input class="text-center" type="text" placeholder="search" />
+            <i class="fa fa-search"></i>
+          </div>
+        </div>
+        <div class="row messages">
+          <div class="col-xs-11 wrapper">
+            <ul class="list-group messages-list scrollbar" id="scroll-style">
+
+              <button class="list-group-item message">
+                Dapibus ac facilisis in
+                <span class="badge badge-primary badge-pill">2</span>
+              </button>
+              <button class="list-group-item message">
+                Morbi leo risus
+                <span class="badge badge-primary badge-pill">1</span>
+              </button>
+              <button class="list-group-item message">
+                Dapibus ac facilisis in
+                <span class="badge badge-primary badge-pill">2</span>
+              </button>
+              <button class="list-group-item message">
+                Morbi leo risus
+                <span class="badge badge-primary badge-pill">1</span>
+              </button>
+              <button class="list-group-item message">
+                Dapibus ac facilisis in
+                <span class="badge badge-primary badge-pill">2</span>
+              </button>
+              <button class="list-group-item message">
+                Morbi leo risus
+                <span class="badge badge-primary badge-pill">1</span>
+              </button>
+              <button class="list-group-item message">
+                Dapibus ac facilisis in
+                <span class="badge badge-primary badge-pill">2</span>
+              </button>
+              <button class="list-group-item message">
+                Morbi leo risus
+                <span class="badge badge-primary badge-pill">1</span>
+              </button>
+              <button class="list-group-item message">
+                Dapibus ac facilisis in
+                <span class="badge badge-primary badge-pill">2</span>
+              </button>
+              <button class="list-group-item message">
+                Morbi leo risus
+                <span class="badge badge-primary badge-pill">1</span>
+              </button>
+              <button class="list-group-item message">
+                Dapibus ac facilisis in
+                <span class="badge badge-primary badge-pill">2</span>
+              </button>
+              <button class="list-group-item message">
+                Morbi leo risus
+                <span class="badge badge-primary badge-pill">1</span>
+              </button>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-8 chat-message" style="background: purple">
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="vendor/jquery/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript">
+    $('#logout').click(function(){
+      token($(this).attr('href'));
+    });
+  </script>
+</body>
+</html>

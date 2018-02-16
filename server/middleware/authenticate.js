@@ -12,10 +12,10 @@ var authenticate = (req, res, next) =>{
 
     req.user = user;
     req.token = token;
-    res.clearCookie('token');
+    //res.clearCookie('token');
     next();
   }).catch((e)=>{
-    res.redirect('/home.html');
+    res.redirect('/');
   });
 };
 module.exports = {authenticate};

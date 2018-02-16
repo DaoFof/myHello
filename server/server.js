@@ -34,10 +34,10 @@ app.get('/login',(req, res)=>{
 });
 
 app.get('/home',authenticate,(req, res)=>{
-    var token = req.token;
-    res.render('home.hbs',{
-      user: req.user
-    });
+  var token = req.token;
+  res.render('home.hbs',{
+    user: req.user
+  });
 });
 
 app.post('/', urlencodedParser, (req, res)=>{

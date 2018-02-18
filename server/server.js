@@ -81,6 +81,11 @@ app.get('/logout',authenticate, (req,res)=>{
   });
 });
 
+app.post('/getContacts',urlencodedParser,(req, res)=>{
+  var search =  req.body.search;
+  console.log(search);
+});
+
 app.listen(port,()=>{
   console.log(`Server is up on ${port}`);
 });

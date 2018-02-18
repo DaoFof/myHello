@@ -42,7 +42,36 @@ var UserSchema = new mongoose.Schema({
     type: Date,
     require: true,
     default: Date.now
-  }
+  },
+  contacts:[{
+    id:{
+      type: String,
+      require: true
+    },
+    name:{
+      type: String,
+      require: true
+    },
+    date:{
+      type: Date,
+      // require: true
+      default: Date.now
+    }
+  }],
+  requests:[{
+    id:{
+      type: String,
+      require: true
+    },
+    name: {
+      type: String,
+      require: true
+    },
+    date:{
+      type: Date,
+      default: Date.now
+    }
+  }]
 });
 
 UserSchema.methods.generateAuthToken = function () {

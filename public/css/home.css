@@ -13,6 +13,9 @@ height: 100vh;
 ul{
   list-style-type: none;
 }
+button{
+  cursor: pointer;
+}
 #wrapper{
   width: 100%;
   overflow: hidden;
@@ -80,15 +83,59 @@ nav ul li:hover{
 .current{
   background: #4D4077;
 }
-#option_message_content{
+#option_message_content, #option_contact_content{
   width: 25%;
   background-color: #F4F6FB;
 }
-#option_message_content ul{
+#option_message_content ul, #option_contact_content ul{
   /* padding-top: 20px; */
   width: 100%;
   height: inherit;
 }
+.search, .toggle_contact_list {
+    padding: 20px;
+  }
+
+input {
+  border-radius: 3px;
+  border: none;
+  padding: 14px;
+  color: white;
+  background: #605291;
+  width: 90%;
+  font-size: 16px;
+}
+
+.fa-search {
+  position: relative;
+  top: -30px;
+  left: 90%;
+  color: #FFFFFF;
+}
+.toggle_contact_list ul{
+  padding: 5%;
+}
+.toggle_contact_list ul li{
+  float: left;
+  width: 30%;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 5%;
+  border-color: #7769A6;
+}
+.toggle_contact_list button{
+  width: 100%;
+  padding: 7%;
+  background: #605291;
+  color: #FFFFFF;
+}
+.toggle_contact_list button:hover{
+  background: #4D4077;
+}
+.currentlist{
+  background: #4D4077;
+}
+
 .scrollbar{
 	width: auto;
 	overflow-y: scroll;
@@ -118,34 +165,40 @@ ul li.message{
   height: 100px;
   overflow: auto;
 }
-ul li.message:hover{
+ul li.contact{
+ width: 100%;
+ padding: 3% 10px 5% 10px;
+ height: 45px;
+ overflow: auto;
+}
+ul li.contact:hover{
   background-color: #FFFFFF;
 }
-.sender-img, .info {
+.sender-img, .contact-img, .info {
   float: left;
 }
-.sender-img{
+.sender-img, .contact-img{
   width: 20%;
   text-align: center;
 }
-.message img{
+.message img, .contact img{
  border-radius: 50%;
  height: 50px;
 }
 .info{
   width: 80%;
 }
-.sender-name{
+.sender-name, .contact-name{
   font-weight: 700;
   font-size: 100%;
-  padding: 10px 0 10px 0;
+  padding: 13px 0 10px 0;
 }
 .date{
   padding-bottom: 10px;
 }
 #chat-box{
   width: 60%;
-  background-color: #FFFFFF;
+  background: url('../img/home-back.jpg');
   position: relative;
 }
 
@@ -262,7 +315,7 @@ ul li.message:hover{
 .chat__footer form * {
     margin-right: 10px;
 }
-button {
+.chat-btn {
     border: none;
     background: #605291;
     color: white;

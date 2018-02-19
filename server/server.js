@@ -2,6 +2,9 @@ const express = require('express');
 const hbs = require('hbs');
 const path = require('path');
 const bodyParser = require('body-parser');
+const socketIO = require('socket.io');
+const http = require('http');
+const _ = require('lodash');
 
 const port = process.env.PORT || 3000;
 const partialsPath = path.join(__dirname,'../views/partials');
@@ -13,6 +16,8 @@ var {User} = require('./models/user.js');
 var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
 
 hbs.registerPartials(partialsPath);
 
@@ -86,6 +91,31 @@ app.post('/getContacts',urlencodedParser,(req, res)=>{
   console.log(search);
 });
 
-app.listen(port,()=>{
+//socketIO
+
+
+io.on('connection',(socket)=>{
+  console.log('New user connected');
+
+  socket.on('getContacts',async (toSearch)=>{
+    try{
+      var users = await User.find({
+        username: { $regex: new RegExp('^' + toSearch.search), $options: 'i' }
+      });
+      var nameArr =[];
+      users.forEach(function(user){
+        nameArr.push(_.pick(user, ['username']));
+      });
+      socket.emit('responseResearch', nameArr)
+    } catch(e){
+      console.log('e', e);
+    }
+  });
+
+  socket.on('disconnect',()=>{
+    console.log('User offline');
+  });
+});
+server.listen(port,()=>{
   console.log(`Server is up on ${port}`);
 });

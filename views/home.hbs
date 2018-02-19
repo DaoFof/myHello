@@ -145,7 +145,7 @@
         <input id="contact_search" type="text" placeholder="search" />
         <i class="fa fa-search"></i>
       </div>
-      <ul class="scrollbar scroll-style">
+      <ul class="scrollbar scroll-style" id="contacts-list">
         <li class="contact">
           <div class="contact-img">
             <img src="img/640x640.png" alt="contact-img">
@@ -289,11 +289,12 @@
       </div>
     </section>
   </div>
-
+  <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="vendor/jquery/jquery.cookie.js"></script>
   <script type="text/javascript" src="js/utils.js"></script>
   <script src="js/home.js"></script>
+  <script src="js/searching.js"></script>
   <script type="text/javascript">
     $('#logout').click(function(){
       token($(this).attr('href'));

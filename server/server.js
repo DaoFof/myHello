@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const socketIO = require('socket.io');
 const http = require('http');
 const _ = require('lodash');
+const {ObjectID} = require('mongodb');
 
 const port = process.env.PORT || 3000;
 const partialsPath = path.join(__dirname,'../views/partials');
@@ -104,13 +105,95 @@ io.on('connection',(socket)=>{
       });
       var nameArr =[];
       users.forEach(function(user){
-        nameArr.push(_.pick(user, ['username']));
+        nameArr.push(_.pick(user, ['username', '_id']));
       });
       socket.emit('responseResearch', nameArr)
     } catch(e){
       console.log('e', e);
     }
   });
+
+  //Requests
+
+  socket.on('sendRequest', async(data, callback)=>{
+    try{
+      var user = await User.findByToken(data.token);
+      if(!user){
+        return Promise.reject();
+      }
+
+      var update = {
+        $push:{
+          requests: {
+            requesterId: user._id,
+            name: user.username
+          }
+        }
+      }
+      user = await User.findOneAndUpdate({_id: data.add}, update, {new : true});
+      if(!user){
+        console.log('failed');
+        throw new Error();
+      }
+      // console.log(user);
+      callback();
+    }catch(e){
+      console.log('error');
+      return callback('Failed to add user');
+    }
+  });
+
+  socket.on('seeRequest', async (data)=>{
+    try{
+      var user = await User.findByToken(data.token);
+      if(!user){
+        return Promise.reject();
+      }
+      // console.log(user);
+      var requestArr = [];
+      user.requests.forEach(function(request){
+        var requester = _.pick(request, ['requesterId', 'name']);
+        requestArr.push(requester);
+      });
+      socket.emit('responseSeeRequest', requestArr);
+    }catch(e){
+      console.log(e);
+    }
+  });
+
+  socket.on('acceptRequest', async(data, callback)=>{
+    try{
+      var user = await User.findByToken(data.token);
+      if(!user){
+        return Promise.reject();
+      }
+
+      var update = {
+        $pull:{
+          requests: {
+            requesterId: data.add
+          }
+        },
+        $push:{
+          contacts: {
+            contactId: data.add,
+            name: data.name
+          }
+        }
+      }
+      user = await User.findOneAndUpdate({_id: user._id}, update, {new : true});
+      if(!user){
+        console.log('failed');
+        throw new Error();
+      }
+      // console.log(user);
+      callback();
+    }catch(e){
+      console.log(e);
+      return callback('Failed to add user');
+    }
+  });
+
 
   socket.on('disconnect',()=>{
     console.log('User offline');

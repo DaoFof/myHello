@@ -44,7 +44,7 @@ var UserSchema = new mongoose.Schema({
     default: Date.now
   },
   contacts:[{
-    id:{
+    contactId:{
       type: String,
       require: true
     },
@@ -59,7 +59,7 @@ var UserSchema = new mongoose.Schema({
     }
   }],
   requests:[{
-    id:{
+    requesterId:{
       type: String,
       require: true
     },

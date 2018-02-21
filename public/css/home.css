@@ -188,6 +188,30 @@ ul li.contact:hover{
 .info{
   width: 80%;
 }
+.info p{
+  width: 70%;
+}
+.info .name{
+  text-align: center;
+}
+.info div{
+  width: 30%;
+  padding-top: 12px;
+}
+.info p, .info div{
+  float: left;
+}
+.info div i{
+  float: left;
+  cursor: pointer;
+}
+.fa-handshake{
+  margin-right: 10px;
+  color: green;
+}
+.fa-times{
+  color: #A2474C;
+}
 .sender-name, .contact-name{
   font-weight: 700;
   font-size: 100%;
@@ -324,4 +348,11 @@ ul li.contact:hover{
     transition: background .3s ease;
     font-family: 'Indie Flower';
     font-size: 100%;
+}
+
+
+/*icons colors*/
+
+.fa-exclamation-circle{
+  color: #A2474C;
 }

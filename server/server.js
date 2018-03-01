@@ -14,6 +14,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const mongoose = require('./db/mongoose.js')
 var {User} = require('./models/user.js');
+var {Conversation} = require('./models/conversation.js');
 var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
@@ -33,10 +34,6 @@ app.use(express.static(publicPath));
 
 app.get('/',(req, res)=>{
   res.render('index.hbs');
-});
-
-app.get('/login',(req, res)=>{
-  res.redirect("/home.html");
 });
 
 app.get('/home',authenticate,(req, res)=>{
@@ -87,10 +84,10 @@ app.get('/logout',authenticate, (req,res)=>{
   });
 });
 
-app.post('/getContacts',urlencodedParser,(req, res)=>{
-  var search =  req.body.search;
-  console.log(search);
-});
+// app.post('/getContacts',urlencodedParser,(req, res)=>{
+//   var search =  req.body.search;
+//   console.log(search);
+// });
 
 //socketIO
 
@@ -98,6 +95,22 @@ app.post('/getContacts',urlencodedParser,(req, res)=>{
 io.on('connection',(socket)=>{
   console.log('New user connected');
 
+
+  //on loading
+
+  socket.on('getMyContacts', async(data) =>{
+    try {
+      var user = await User.findByToken(data.token);
+      if(!user){
+        return Promise.reject();
+      }
+      socket.emit('myContacts', user.contacts);
+    } catch (e) {
+      console.log(e);
+    }
+  });
+
+  //searching
   socket.on('getContacts',async (toSearch)=>{
     try{
       var users = await User.find({
@@ -182,7 +195,16 @@ io.on('connection',(socket)=>{
         }
       }
       user = await User.findOneAndUpdate({_id: user._id}, update, {new : true});
-      if(!user){
+      update = {
+        $push:{
+          contacts:{
+            contactId: user._id,
+            name: user.username
+          }
+        }
+      }
+      var requester =  await User.findOneAndUpdate({_id : ObjectID(data.add)},update,{new:true})
+      if(!(user || requester)){
         console.log('failed');
         throw new Error();
       }
@@ -194,7 +216,31 @@ io.on('connection',(socket)=>{
     }
   });
 
-
+  socket.on('declineRequest',async(data, callback)=>{
+    try{
+      var user = await User.findByToken(data.token);
+      if(!user){
+        return Promise.reject();
+      }
+      var update = {
+        $pull:{
+          requests: {
+            requesterId: data.decline
+          }
+        }
+      };
+      user = await User.findOneAndUpdate({_id: user._id}, update, {new : true});
+      if(!user){
+        console.log('failed');
+        throw new Error();
+      }
+      console.log(user);
+      callback();
+    }catch(e){
+      console.log(e);
+      return callback('Failed to add user');
+    }
+  });
   socket.on('disconnect',()=>{
     console.log('User offline');
   });

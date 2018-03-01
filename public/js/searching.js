@@ -8,6 +8,20 @@ function cleanul(){
       ul.removeChild(ul.firstChild);
   }
 };
+// On loading
+socket.on('connect', function(){
+  console.log('Connected');
+  socket.emit('getMyContacts', {token: localStorage.getItem('token').toString()});
+});
+
+socket.on('myContacts', function(res){
+  cleanul();
+  res.forEach(function(contact){
+    var li = jQuery('<li class="contact"><div class="contact-img"><img src="img/640x640.png" alt="contact-img"/></div><div class="info"><p class="contact-name name">'+contact.name+'</p></div></li>');
+    jQuery('#contacts-list').append(li);
+  });
+});
+//Searching
 inputSearchContact.keyup(function(e) {
   if (e.which == 13 ) {
      e.preventDefault();
@@ -40,6 +54,10 @@ $('body').on('click','.fa-user-plus',function(e){
   });
 });
 
+$('#getContacts').on('click', function(e){
+  socket.emit('getMyContacts', {token: localStorage.getItem('token').toString()});
+});
+
 $('#request').on('click',function(e){
   socket.emit('seeRequest',{token: localStorage.getItem('token').toString()});
 });
@@ -66,5 +84,22 @@ $('body').on('click', '.fa-handshake', function(e){
           jQuery('.fa-check').remove();
         });
     }
-  })
+  });
+});
+$('body').on('click', '.fa-times', function(e){
+  $(this).addClass('clicked');
+
+  socket.emit('declineRequest',{decline: $(this).attr('href'), token: localStorage.getItem('token').toString()}, function(err){
+    if(err){
+      $('.clicked').removeClass('fa-times').addClass('fa-exclamation-circle');
+      setTimeout(function(){
+        $('.clicked').removeClass('fa-exclamation-circle clicked').addClass('fa-times');
+      },3000);
+    }else{
+      $('.clicked').removeClass('fa-times clicked').addClass('fa-check');
+      jQuery('.fa-check').parents('li').hide('slow', function(){
+        jQuery('.fa-check').remove();
+      });
+    }
+  });
 });
